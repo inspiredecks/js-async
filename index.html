@@ -8,26 +8,29 @@
 	<title>Your deck.js Presentation</title>
 
 	<!-- Required stylesheet -->
-	<link rel="stylesheet" media="screen" href="deckjs/core/deck.core.css">
+	<link rel="stylesheet" media="screen" href="lib/deckjs/core/deck.core.css">
 
 	<!-- Extension CSS files go here. Remove or add as needed. -->
-	<link rel="stylesheet" media="screen" href="deckjs/extensions/goto/deck.goto.css">
-	<link rel="stylesheet" media="screen" href="deckjs/extensions/menu/deck.menu.css">
-	<link rel="stylesheet" media="screen" href="deckjs/extensions/navigation/deck.navigation.css">
-	<link rel="stylesheet" media="screen" href="deckjs/extensions/status/deck.status.css">
-	<link rel="stylesheet" media="screen" href="deckjs/extensions/scale/deck.scale.css">
+	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/goto/deck.goto.css">
+	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/menu/deck.menu.css">
+	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/status/deck.status.css">
+	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/scale/deck.scale.css">
 
 	<!-- Style theme. More available in /themes/style/ or create your own. -->
-	<link rel="stylesheet" media="screen" href="deckjs/themes/style/web-2.0.css">
+	<link rel="stylesheet" media="screen" href="lib/deckjs/themes/style/swiss.css">
 
 	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
-	<link rel="stylesheet" media="screen" href="deckjs/themes/transition/horizontal-slide.css">
+	<link rel="stylesheet" media="screen" href="lib/deckjs/themes/transition/horizontal-slide.css">
 
 	<!-- Basic black and white print styles -->
-	<link rel="stylesheet" media="print" href="deckjs/core/print.css">
+	<link rel="stylesheet" media="print" href="lib/deckjs/core/print.css">
+
+	<!-- Author stylesheet -->
+	<link rel="stylesheet" media="screen" href="style/main.css">
 
 	<!-- Required Modernizr file -->
-	<script src="modernizr.custom.js"></script>
+	<script src="lib/modernizr.custom.js"></script>
 </head>
 <body>
 	<div class="deck-container">
@@ -35,15 +38,29 @@
 		<!-- Begin slides. Just make elements with a class of slide. -->
 
 		<section class="slide">
-			<h1>Slide</h1>
+			<h1>Async JavaScript</h1>
+		</section>
+
+		<section class="slide about-me">
+			<h2>Tri Nguyen</h2>
+			<ul>
+				<li>Software Engineer @ Demandware</li>
+				<li><span class="entypo-github"></span> <a href="http://github.com/tnguyen14">tnguyen14</a></li>
+				<li><span class="entypo-twitter"></span> <a href="http://twitter.com/tridnguyen">@tridnguyen</a></li>
+				<li><span class="entypo-heart"></span> JS, node, HTML, CSS, Open Web, Open Source</li>
+			</ul>
 		</section>
 
 		<section class="slide">
-			<h1>Content</h1>
+			<h1>Event Loop</h1>
 		</section>
 
 		<section class="slide">
-			<h1>Here</h1>
+			<h1>Callback</h1>
+		</section>
+
+		<section class="slide">
+			<h1>Promises</h1>
 		</section>
 
 		<!-- End slides. -->
@@ -75,15 +92,15 @@
 	</div>
 
 <!-- Required JS files. -->
-<script src="jquery-2.1.1.min.js"></script>
-<script src="deckjs/core/deck.core.js"></script>
+<script src="lib/jquery-2.1.1.min.js"></script>
+<script src="lib/deckjs/core/deck.core.js"></script>
 
 <!-- Extension JS files. Add or remove as needed. -->
-<script src="deckjs/extensions/menu/deck.menu.js"></script>
-<script src="deckjs/extensions/goto/deck.goto.js"></script>
-<script src="deckjs/extensions/status/deck.status.js"></script>
-<script src="deckjs/extensions/navigation/deck.navigation.js"></script>
-<script src="deckjs/extensions/scale/deck.scale.js"></script>
+<script src="lib/deckjs/extensions/menu/deck.menu.js"></script>
+<script src="lib/deckjs/extensions/goto/deck.goto.js"></script>
+<script src="lib/deckjs/extensions/status/deck.status.js"></script>
+<script src="lib/deckjs/extensions/navigation/deck.navigation.js"></script>
+<script src="lib/deckjs/extensions/scale/deck.scale.js"></script>
 
 <!-- Initialize the deck. You can put this in an external file if desired. -->
 <script>
