@@ -1,0 +1,30 @@
+{
+  "name": "js-async",
+  "version": "1.0.0",
+  "description": "Deck on asynchronous javascript",
+  "main": "index.html",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "local-web-server": "^0.5.15"
+  },
+  "local-web-server":{
+    "port": 9001
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ws"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:inspiredecks/js-async.git"
+  },
+  "author": "Tri Nguyen <tri@tridnguyen.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inspiredecks/js-async/issues"
+  },
+  "homepage": "https://github.com/inspiredecks/js-async"
+}
