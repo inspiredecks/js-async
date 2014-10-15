@@ -24,7 +24,7 @@ gulp.task('scss', function () {
 	return gulp.src('scss/**/*.scss')
 		.pipe(sass())
 		.pipe(prefix())
-		..pipe(csso())
+		.pipe(csso())
 		.pipe(gulp.dest('dist/style'));
 });
 
@@ -38,4 +38,5 @@ gulp.task('deploy', ['build'], function () {
 
 gulp.task('watch', ['build'], function () {
 	gulp.watch(['index.html'], ['copy:html']);
+	gulp.watch('scss/**/*.scss', ['scss']);
 });
