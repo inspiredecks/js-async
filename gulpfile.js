@@ -12,9 +12,7 @@ gulp.task('clean', function () {
 
 gulp.task('copy:lib', function () {
 	return gulp.src(['./lib/**/*'])
-		.pipe(copy('dist/', {
-			prefix: 1 //ignore the 'lib' in path
-		}));
+		.pipe(copy('dist/'));
 });
 
 gulp.task('copy:html', function () {
