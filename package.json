@@ -20,7 +20,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ws"
+    "prestart": "gulp build",
+    "start": "ws",
+    "deploy": "gulp deploy"
   },
   "repository": {
     "type": "git",

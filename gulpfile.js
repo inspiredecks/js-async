@@ -22,6 +22,6 @@ gulp.task('copy:html', function () {
 gulp.task('build', ['clean', 'copy:lib', 'copy:html']);
 
 gulp.task('deploy', ['build'], function () {
-	return gulp.src(['index.html', './lib/**/*', './dist/**/*'])
+	return gulp.src(['./dist/**/*'])
 		.pipe(ghPages());
 });
