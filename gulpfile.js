@@ -29,7 +29,7 @@ gulp.task('scss', function () {
 });
 
 
-gulp.task('build', ['clean', 'copy:lib', 'copy:html']);
+gulp.task('build', ['clean', 'copy:lib', 'copy:html', 'scss']);
 
 gulp.task('deploy', ['build'], function () {
 	return gulp.src(['./dist/**/*'])
