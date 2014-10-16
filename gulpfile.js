@@ -12,11 +12,16 @@ gulp.task('clean', function () {
 
 gulp.task('copy:lib', function () {
 	return gulp.src(['./lib/**/*'])
-		.pipe(copy('dist/'));
+		.pipe(copy('dist'));
 });
 
 gulp.task('copy:html', function () {
 	return gulp.src('index.html')
+		.pipe(copy('dist'));
+});
+
+gulp.task('copy:assets', function () {
+	return gulp.src('./assets/**/*')
 		.pipe(copy('dist'));
 });
 
@@ -29,7 +34,7 @@ gulp.task('scss', function () {
 });
 
 
-gulp.task('build', ['clean', 'copy:lib', 'copy:html', 'scss']);
+gulp.task('build', ['clean', 'copy:lib', 'copy:html', 'copy:assets', 'scss']);
 
 gulp.task('deploy', ['build'], function () {
 	return gulp.src(['./dist/**/*'])
