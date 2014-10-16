@@ -30,3 +30,16 @@
 		height: 25em;
 	}
 }
+
+li {
+	list-style: none;
+	span {
+		margin-right: 0.5em;
+	}
+}
+
+.feature {
+	margin-top: 8em;
+	text-align: center;
+	font-size: 1.4em;
+}

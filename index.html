@@ -5,13 +5,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=1024, user-scalable=no">
 
-	<title>Your deck.js Presentation</title>
+	<title>Async JavaScript</title>
 
 	<!-- Required stylesheet -->
 	<link rel="stylesheet" media="screen" href="lib/deckjs/core/deck.core.css">
 
 	<!-- Extension CSS files go here. Remove or add as needed. -->
-	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/goto/deck.goto.css">
 	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/menu/deck.menu.css">
 	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/navigation/deck.navigation.css">
 	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/status/deck.status.css">
@@ -133,9 +132,9 @@ function writeChapters(err, chapters) {
 }
 
 function readSync() {
-	var chapter1 = getSync('//example.com/chapters/1');
-	var chapter2 = getSync('//example.com/chapters/2');
-	var chapter3 = getSync('//example.com/chapters/3');
+	var chapter1 = getSync('http://example.com/chapters/1');
+	var chapter2 = getSync('http://example.com/chapters/2');
+	var chapter3 = getSync('http://example.com/chapters/3');
 	return [chapter1, chapter2, chapter3];
 }
 
@@ -148,13 +147,13 @@ writeChapters(readSync());
 				<code class="language-javascript">
 function readAsync(callback) {
 	var chapter1, chapter2, chapter3;
-	getAsync('//example.com/chapters/1', function (err, c1) {
+	getAsync('http://example.com/chapters/1', function (err, c1) {
 		if (err) { callback(err); }
 		chapter1 = c1;
-		getAsync('//example.com/chapters/2', function (err, c2) {
+		getAsync('http://example.com/chapters/2', function (err, c2) {
 			if (err) { callback(err); }
 			chapter2 = c2;
-			getAsync('//example.com/chapters/3', function (err, c3) {
+			getAsync('http://example.com/chapters/3', function (err, c3) {
 				if (err) { callback(err); }
 				chapter3 = c3;
 				callback(null, [chapter1, chapter2, chapter3]);
@@ -166,13 +165,77 @@ function readAsync(callback) {
 readAsync(writeChapters);
 				</code>
 			</pre>
-			<ul class="slide">
-				<li><span class="entypo-cancel"></span>Conflate input and output</li>
-				<li><span class="entypo-cancel"></span>Rely on convention</li>
-				<li><span class="entypo-cancel"></span>Cannot run processes in parallel</li>
+			<ul>
+				<li class="slide"><span class="entypo-cancel"></span>Cannot run processes in parallel</li>
+				<li class="slide"><span class="entypo-cancel"></span>Conflate input and output</li>
+				<li class="slide"><span class="entypo-cancel"></span>Rely on convention</li>
 			</ul>
 		</section>
 
+		<section class="slide">
+			<p class="feature"><a href="https://github.com/caolan/async">github.com/caolan/async</a></p>
+		</section>
+		<section class="slide">
+			<h3>async parallel</h3>
+			<pre>
+				<code class="language-javascript">
+async.parallel([
+	function (callback) {
+		getAsync('http://example.com/chapters/1', function (err, c1) {
+			if (err) { return callback(err); }
+			callback(null, c1);
+		});
+	},
+	function (callback) {
+		getAsync('http://example.com/chapters/2', function (err, c2) {
+			if (err) { return callback(err); }
+			callback(null, c2);
+		});
+	},
+	function (callback) {
+		getAsync('http://example.com/chapters/3', function (err, c3) {
+			if (err) { return callback(err); }
+			callback(null, c3);
+		});
+	}
+], writeChapters);
+				</code>
+			</pre>
+			<ul class="slide">
+				<li><span class="entypo-check"></span>Run processes in parallel</li>
+				<li><span class="entypo-cancel"></span>Not scalable</li>
+				<li><span class="entypo-cancel"></span>Conflate input and output</li>
+			</ul>
+		</section>
+		<section class="slide">
+			<h3>async parallel with map</h3>
+			<pre>
+				<code class="language-javascript">
+var chapters = [
+	'http://example.com/chapters/1',
+	'http://example.com/chapters/2',
+	'http://example.com/chapters/3'
+];
+
+var getChapters = chapters.map(function (url) {
+	return function (callback) {
+		getAsync(url, function (err, chapter) {
+			if (err) { return callback(err); }
+			callback(null, chapter);
+		});
+	};
+});
+
+async.parallel(getChapters, writeChapters);
+				</code>
+			</pre>
+			<ul class="slide">
+				<li><span class="entypo-check"></span>Run processes in parallel</li>
+				<li><span class="entypo-check"></span>Not scalable</li>
+				<li><span class="entypo-cancel"></span>Conflate input and output</li>
+				<li><span class="entypo-cancel"></span>Handle error multiple times</li>
+			</ul>
+		</section>
 		<section class="slide">
 			<h1>Promises</h1>
 		</section>
@@ -194,14 +257,6 @@ readAsync(writeChapters);
 			<span class="deck-status-total"></span>
 		</p>
 
-		<!-- deck.goto snippet -->
-		<form action="." method="get" class="goto-form">
-			<label for="goto-slide">Go to slide:</label>
-			<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
-			<datalist id="goto-datalist"></datalist>
-			<input type="submit" value="Go">
-		</form>
-
 		<!-- End extension snippets. -->
 	</div>
 
@@ -214,7 +269,6 @@ readAsync(writeChapters);
 
 <!-- Extension JS files. Add or remove as needed. -->
 <script src="lib/deckjs/extensions/menu/deck.menu.js"></script>
-<script src="lib/deckjs/extensions/goto/deck.goto.js"></script>
 <script src="lib/deckjs/extensions/status/deck.status.js"></script>
 <script src="lib/deckjs/extensions/navigation/deck.navigation.js"></script>
 <script src="lib/deckjs/extensions/scale/deck.scale.js"></script>
