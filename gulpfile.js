@@ -7,7 +7,7 @@ var prefix = require('gulp-autoprefixer');
 var csso = require('gulp-csso');
 
 gulp.task('clean', function () {
-	del(['dist']);
+	del.sync(['dist/**/*']);
 });
 
 gulp.task('copy:lib', function () {
