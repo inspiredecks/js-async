@@ -5,6 +5,12 @@
 	font-family: 'entypo', sans-serif;
 }
 
+.feature {
+	width: 90%;
+	margin: 1em auto;
+	font-size: 1.2em;
+}
+
 .single-threaded {
 	h1 {
 		color: #333
@@ -31,6 +37,10 @@
 	}
 }
 
+.caolan {
+	margin-top: 8em;
+}
+
 li {
 	list-style: none;
 	span {
@@ -38,8 +48,7 @@ li {
 	}
 }
 
-.feature {
-	margin-top: 8em;
+.center,
+.thank-you h4 {
 	text-align: center;
-	font-size: 1.4em;
 }

@@ -173,7 +173,7 @@ readAsync(writeChapters);
 		</section>
 
 		<section class="slide">
-			<p class="feature"><a href="https://github.com/caolan/async">github.com/caolan/async</a></p>
+			<p class="feature center caolan"><a href="https://github.com/caolan/async">github.com/caolan/async</a></p>
 		</section>
 		<section class="slide">
 			<h3>async parallel</h3>
@@ -303,7 +303,7 @@ getChapter('http://example.com/chapters/1').then(function (res) {
 			</pre>
 		</section>
 		<section class="slide">
-			<h3>scale with <code>reduce</code></h3>
+			<h3>sequencing with <code>reduce</code></h3>
 			<pre>
 				<code class="language-javascript">
 var chapters = [
@@ -319,6 +319,81 @@ return sequence.then(function () {
 }, Promise.resolve());
 				</code>
 			</pre>
+		</section>
+
+		<section class="slide">
+			<h3>do more things</h3>
+			<pre>
+				<code data-line="1" class="language-javascript">
+var chapters = [
+'http://example.com/chapters/1',
+'http://example.com/chapters/2',
+'http://example.com/chapters/3'
+];
+
+chapters.reduce(function (sequence, url) {
+	return sequence.then(function () {
+		return getChapter(url);
+	}).then(function (chapter) {
+		addToPage(chapter);
+	});
+}, Promise.resolve());
+				</code>
+			</pre>
+		</section>
+
+		<section class="slide">
+			<h3>parallel</h3>
+			<pre>
+				<code class="language-javascript">
+var chapters = [
+'http://example.com/chapters/1',
+'http://example.com/chapters/2',
+'http://example.com/chapters/3'
+];
+
+Promise.all(chapters.map(getChapter)).then(function (chapters) {
+	chapters.forEach(function (c) {
+		addToPage(c);
+	});
+}).then(function () {
+	console.log('All done!');
+}, function (err) {
+	console.log('Ooops!');
+});
+				</code>
+			</pre>
+		</section>
+
+		<section class="slide">
+			<h3>best of both worlds: parallelism & sequencing</h3>
+			<pre>
+				<code class="language-javascript">
+chapters.map(getChapter).redunce(function(sequence, chapterPromise) {
+	return sequence.then(function () {
+		 return chapterPromise;
+	}).then(function (c) {
+		addToPage(c);
+	});
+}, Promise.resolve());
+				</code>
+			</pre>
+		</section>
+
+		<section class="slide thank-you">
+			<div class="feature">
+				<h4>Inspiration</h4>
+				<ul>
+					<li><a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">Philip Roberts: What the heck is the event loop anyway? | JSConf EU 2014</a></li>
+					<li><a href="https://www.youtube.com/watch?v=qbKWsbJ76-s">Forbes Lindesay: Promises and Generators: control flow utopia | JSConf EU 2013</a></li>
+					<li><a href="http://www.html5rocks.com/en/tutorials/es6/promises/">Jake Archibald: JavaScript Promises - There and back again | HTML5Rocks</a></li>
+				</ul>
+			</div>
+			<h4>Slides</h4>
+			<p class="feature center">
+				<a href="http://decks.tridnguyen.com/js-async">http://decks.tridnguyen.com/js-async</a>
+			</p>
+			<h4>Thank you!</h4>
 		</section>
 		<!-- End slides. -->
 
