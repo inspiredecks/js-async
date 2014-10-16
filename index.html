@@ -5,13 +5,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=1024, user-scalable=no">
 
-	<title>Your deck.js Presentation</title>
+	<title>Async JavaScript</title>
 
 	<!-- Required stylesheet -->
 	<link rel="stylesheet" media="screen" href="lib/deckjs/core/deck.core.css">
 
 	<!-- Extension CSS files go here. Remove or add as needed. -->
-	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/goto/deck.goto.css">
 	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/menu/deck.menu.css">
 	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/navigation/deck.navigation.css">
 	<link rel="stylesheet" media="screen" href="lib/deckjs/extensions/status/deck.status.css">
@@ -25,6 +24,8 @@
 
 	<!-- Basic black and white print styles -->
 	<link rel="stylesheet" media="print" href="lib/deckjs/core/print.css">
+
+	<link rel="stylesheet" media="screen" href="lib/prism.css">
 
 	<!-- Author stylesheet -->
 	<link rel="stylesheet" media="screen" href="style/main.css">
@@ -51,18 +52,349 @@
 			</ul>
 		</section>
 
+		<section class="slide single-threaded">
+			<div class="image-background">
+				<img src="/assets/bridge.jpg"/>
+			</div>
+			<h1>single-threaded</h1>
+		</section>
+
+		<section class="slide">
+			<h2>synchronous execution</h2>
+			<p data-height="500" data-theme-id="9298" data-slug-hash="rLzJE" data-default-tab="result" data-user="tnguyen14" class='codepen'>See the Pen <a href='http://codepen.io/tnguyen14/pen/rLzJE/'>synchronous execution</a> by Tri Nguyen (<a href='http://codepen.io/tnguyen14'>@tnguyen14</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+		</section>
+
+		<section class="slide">
+			<h2>asynchronous execution</h2>
+			<p data-height="500" data-theme-id="9298" data-slug-hash="GJItd" data-default-tab="result" data-user="tnguyen14" class='codepen'>See the Pen <a href='http://codepen.io/tnguyen14/pen/GJItd/'>asynchronous execution</a> by Tri Nguyen (<a href='http://codepen.io/tnguyen14'>@tnguyen14</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//codepen.io/assets/embed/ei.js"></script>
+		</section>
+
+		<section class="slide loupe">
+			<h3>call stack</h3>
+			<iframe src="http://latentflip.com/loupe/?code=ZnVuY3Rpb24gZGVsYXkobikgewogIHZhciBiZWdpbiA9IERhdGUubm93KCk7CiAgdmFyIGR1cmF0aW9uID0gKG4gfHwgMSkgKiAxMDAwOwogIHdoaWxlIChEYXRlLm5vdygpIC0gYmVnaW4gPCBkdXJhdGlvbikge30KfQoKZGVsYXkoMyk7CmNvbnNvbGUubG9nKCdEb25lIHJ1bm5pbmchJyk7!!!"></iframe>
+		</section>
+
+		<section class="slide loupe">
+			<h3>event loop</h3>
+			<iframe src="http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCdEb25lIHJ1bm5pbmchJyk7Cn0sIDMwMDApOw%3D%3D!!!"></iframe>
+		</section>
+
 		<section class="slide">
 			<h1>Event Loop</h1>
 		</section>
 
 		<section class="slide">
-			<h1>Callback</h1>
+			<h2>Callback</h2>
+			<pre>
+				<code class="language-javascript slide">
+function foo() {
+	console.log('foo');
+}
+
+function bar(callback) {
+	console.log('bar');
+	callback();
+}
+
+function baz(callback1, callback2) {
+	console.log('baz');
+	callback1(callback2);
+}
+
+baz(bar, foo);
+				</code>
+				<code class="language-javascript slide">
+// baz
+// bar
+// foo
+				</code>
+			</pre>
+		</section>
+
+		<section class="slide loupe">
+			<h3>event listener</h3>
+			<iframe src="http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCdEb25lIHJ1bm5pbmchJyk7Cn0sIDMwMDApOwoKJC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljayAoKSB7CiAgICBjb25zb2xlLmxvZygnSVwnbSBjbGlja2VkJyk7Cn0pOw%3D%3D!!!PGJ1dHRvbj5DbGljayBNZTwvYnV0dG9uPg%3D%3D"></iframe>
+		</section>
+
+		<section class="slide loupe">
+			<h3>concurrency</h3>
+			<iframe src="http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCdmaXJzdCcpOwp9LCAxMDAwKTsKCnNldFRpbWVvdXQoZnVuY3Rpb24gY2FsbGJhY2soKSB7CiAgICBjb25zb2xlLmxvZygnc2Vjb25kJyk7Cn0sIDEwMDApOwoKc2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCd0aGlyZCcpOwp9LCAxMDAwKTsKCnNldFRpbWVvdXQoZnVuY3Rpb24gY2FsbGJhY2soKSB7CiAgICBjb25zb2xlLmxvZygnZm91cnRoJyk7Cn0sIDEwMDApOw%3D%3D!!!PGJ1dHRvbj5DbGljayBNZTwvYnV0dG9uPg%3D%3D"></iframe>
+		</section>
+
+		<section class="slide">
+			<pre>
+				<code class="language-javascript">
+function writeChapters(err, chapters) {
+	chapters.forEach(function(c) {
+		console.log(c);
+	});
+}
+
+function readSync() {
+	var chapter1 = getSync('http://example.com/chapters/1');
+	var chapter2 = getSync('http://example.com/chapters/2');
+	var chapter3 = getSync('http://example.com/chapters/3');
+	return [chapter1, chapter2, chapter3];
+}
+
+writeChapters(readSync());
+				</code>
+			</pre>
+		</section>
+		<section class="slide">
+			<pre>
+				<code class="language-javascript">
+function readAsync(callback) {
+	var chapter1, chapter2, chapter3;
+	getAsync('http://example.com/chapters/1', function (err, c1) {
+		if (err) { callback(err); }
+		chapter1 = c1;
+		getAsync('http://example.com/chapters/2', function (err, c2) {
+			if (err) { callback(err); }
+			chapter2 = c2;
+			getAsync('http://example.com/chapters/3', function (err, c3) {
+				if (err) { callback(err); }
+				chapter3 = c3;
+				callback(null, [chapter1, chapter2, chapter3]);
+			})
+		});
+	});
+}
+
+readAsync(writeChapters);
+				</code>
+			</pre>
+			<ul>
+				<li class="slide"><span class="entypo-cancel"></span>Cannot run processes in parallel</li>
+				<li class="slide"><span class="entypo-cancel"></span>Conflate input and output</li>
+				<li class="slide"><span class="entypo-cancel"></span>Rely on convention</li>
+			</ul>
+		</section>
+
+		<section class="slide">
+			<p class="feature center caolan"><a href="https://github.com/caolan/async">github.com/caolan/async</a></p>
+		</section>
+		<section class="slide">
+			<h3>async parallel</h3>
+			<pre>
+				<code class="language-javascript">
+async.parallel([
+	function (callback) {
+		getAsync('http://example.com/chapters/1', function (err, c1) {
+			if (err) { return callback(err); }
+			callback(null, c1);
+		});
+	},
+	function (callback) {
+		getAsync('http://example.com/chapters/2', function (err, c2) {
+			if (err) { return callback(err); }
+			callback(null, c2);
+		});
+	},
+	function (callback) {
+		getAsync('http://example.com/chapters/3', function (err, c3) {
+			if (err) { return callback(err); }
+			callback(null, c3);
+		});
+	}
+], writeChapters);
+				</code>
+			</pre>
+			<ul class="slide">
+				<li><span class="entypo-check"></span>Run processes in parallel</li>
+				<li><span class="entypo-cancel"></span>Not scalable</li>
+				<li><span class="entypo-cancel"></span>Conflate input and output</li>
+			</ul>
+		</section>
+		<section class="slide">
+			<h3>async parallel with map</h3>
+			<pre>
+				<code class="language-javascript">
+var chapters = [
+	'http://example.com/chapters/1',
+	'http://example.com/chapters/2',
+	'http://example.com/chapters/3'
+];
+
+var getChapters = chapters.map(function (url) {
+	return function (callback) {
+		getAsync(url, function (err, chapter) {
+			if (err) { return callback(err); }
+			callback(null, chapter);
+		});
+	};
+});
+
+async.parallel(getChapters, writeChapters);
+				</code>
+			</pre>
+			<ul class="slide">
+				<li><span class="entypo-check"></span>Run processes in parallel</li>
+				<li><span class="entypo-check"></span>Not scalable</li>
+				<li><span class="entypo-cancel"></span>Conflate input and output</li>
+				<li><span class="entypo-cancel"></span>Handle error multiple times</li>
+			</ul>
 		</section>
 
 		<section class="slide">
 			<h1>Promises</h1>
 		</section>
+		<section class="slide">
+			<h3>What it looks like</h3>
+			<pre>
+				<code class="language-javascript">
+promisifiedFn().then(onFulfilled, onRejected);
+				</code>
+			</pre>
+			<pre class="slide">
+				<code class="language-javascript">
+getChapter('http://example.com/chapters/1').then(function (chapter) {
+	// do something with it
+	console.log(chapter);
+}, function (err) {
+	// handle error
+});
+				</code>
+			</pre>
+		</section>
+		<section class="slide">
+			<h3>Promise-ifying node-style callbacks</h3>
+			<pre>
+				<code class="language-javascript">
+function getChapter(url) {
+	var promise = new Promise(function (resolve, reject) {
+		xhrRequest(url, function (err, res) {
+			if (err) { reject(err);}
+			resolve(res);
+		});
+	});
+	return promise;
+}
+				</code>
+			</pre>
+			<div class="slide">
+				A promise can be:
+				<ul>
+					<li><strong>resolved/fulfilled</strong> The action relating to the promise succeeded.</li>
+					<li><strong>rejected</strong> The action relating to the promise failed.</li>
+					<li><strong>pending</strong> Hasn't fulfilled or rejected yet.</li>
+				</ul>
+			</div>
+		</section>
 
+		<section class="slide">
+			<h3>chainable</h3>
+			<pre>
+				<code class="language-javascript">
+var chapter1, chapter2, chapter3;
+getChapter('http://example.com/chapters/1').then(function (res) {
+	chapter1 = res;
+	return getChapter('http://example.com/chapters/2');
+}).then(function (res) {
+	chapter2 = res;
+	return getChapter('http://example.com/chapters/3');
+}).then(function (res) {
+	chapter3 = res;
+}).then(null, function (err) {
+	console.log('Error downloading chapters');
+});
+				</code>
+			</pre>
+		</section>
+		<section class="slide">
+			<h3>sequencing with <code>reduce</code></h3>
+			<pre>
+				<code class="language-javascript">
+var chapters = [
+'http://example.com/chapters/1',
+'http://example.com/chapters/2',
+'http://example.com/chapters/3'
+];
+
+chapters.reduce(function (sequence, url) {
+return sequence.then(function () {
+	return getChapter(url);
+});
+}, Promise.resolve());
+				</code>
+			</pre>
+		</section>
+
+		<section class="slide">
+			<h3>do more things</h3>
+			<pre>
+				<code data-line="1" class="language-javascript">
+var chapters = [
+'http://example.com/chapters/1',
+'http://example.com/chapters/2',
+'http://example.com/chapters/3'
+];
+
+chapters.reduce(function (sequence, url) {
+	return sequence.then(function () {
+		return getChapter(url);
+	}).then(function (chapter) {
+		addToPage(chapter);
+	});
+}, Promise.resolve());
+				</code>
+			</pre>
+		</section>
+
+		<section class="slide">
+			<h3>parallel</h3>
+			<pre>
+				<code class="language-javascript">
+var chapters = [
+'http://example.com/chapters/1',
+'http://example.com/chapters/2',
+'http://example.com/chapters/3'
+];
+
+Promise.all(chapters.map(getChapter)).then(function (chapters) {
+	chapters.forEach(function (c) {
+		addToPage(c);
+	});
+}).then(function () {
+	console.log('All done!');
+}, function (err) {
+	console.log('Ooops!');
+});
+				</code>
+			</pre>
+		</section>
+
+		<section class="slide">
+			<h3>best of both worlds: parallelism & sequencing</h3>
+			<pre>
+				<code class="language-javascript">
+chapters.map(getChapter).redunce(function(sequence, chapterPromise) {
+	return sequence.then(function () {
+		 return chapterPromise;
+	}).then(function (c) {
+		addToPage(c);
+	});
+}, Promise.resolve());
+				</code>
+			</pre>
+		</section>
+
+		<section class="slide thank-you">
+			<div class="feature">
+				<h4>Inspiration</h4>
+				<ul>
+					<li><a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">Philip Roberts: What the heck is the event loop anyway? | JSConf EU 2014</a></li>
+					<li><a href="https://www.youtube.com/watch?v=qbKWsbJ76-s">Forbes Lindesay: Promises and Generators: control flow utopia | JSConf EU 2013</a></li>
+					<li><a href="http://www.html5rocks.com/en/tutorials/es6/promises/">Jake Archibald: JavaScript Promises - There and back again | HTML5Rocks</a></li>
+				</ul>
+			</div>
+			<h4>Slides</h4>
+			<p class="feature center">
+				<a href="http://decks.tridnguyen.com/js-async">http://decks.tridnguyen.com/js-async</a>
+			</p>
+			<h4>Thank you!</h4>
+		</section>
 		<!-- End slides. -->
 
 		<!-- Begin extension snippets. Add or remove as needed. -->
@@ -80,24 +412,18 @@
 			<span class="deck-status-total"></span>
 		</p>
 
-		<!-- deck.goto snippet -->
-		<form action="." method="get" class="goto-form">
-			<label for="goto-slide">Go to slide:</label>
-			<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
-			<datalist id="goto-datalist"></datalist>
-			<input type="submit" value="Go">
-		</form>
-
 		<!-- End extension snippets. -->
 	</div>
 
 <!-- Required JS files. -->
 <script src="lib/jquery-2.1.1.min.js"></script>
 <script src="lib/deckjs/core/deck.core.js"></script>
+<script src="lib/prism.js"></script>
+
+<script async src="//codepen.io/assets/embed/ei.js"></script>
 
 <!-- Extension JS files. Add or remove as needed. -->
 <script src="lib/deckjs/extensions/menu/deck.menu.js"></script>
-<script src="lib/deckjs/extensions/goto/deck.goto.js"></script>
 <script src="lib/deckjs/extensions/status/deck.status.js"></script>
 <script src="lib/deckjs/extensions/navigation/deck.navigation.js"></script>
 <script src="lib/deckjs/extensions/scale/deck.scale.js"></script>
