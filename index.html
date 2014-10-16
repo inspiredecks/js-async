@@ -78,7 +78,7 @@
 
 		<section class="slide loupe">
 			<h3>event loop</h3>
-			<iframe src="http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbigpIHsKICAgIGNvbnNvbGUubG9nKCdEb25lIHJ1bm5pbmchJyk7Cn0sIDMwMDApOw%3D%3D!!!"></iframe>
+			<iframe src="http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCdEb25lIHJ1bm5pbmchJyk7Cn0sIDMwMDApOw%3D%3D!!!"></iframe>
 		</section>
 
 		<section class="slide">
@@ -86,7 +86,91 @@
 		</section>
 
 		<section class="slide">
-			<h1>Callback</h1>
+			<h2>Callback</h2>
+			<pre>
+				<code class="language-javascript slide">
+function foo() {
+	console.log('foo');
+}
+
+function bar(callback) {
+	console.log('bar');
+	callback();
+}
+
+function baz(callback1, callback2) {
+	console.log('baz');
+	callback1(callback2);
+}
+
+baz(bar, foo);
+				</code>
+				<code class="language-javascript slide">
+// baz
+// bar
+// foo
+				</code>
+			</pre>
+		</section>
+
+		<section class="slide loupe">
+			<h3>event listener</h3>
+			<iframe src="http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCdEb25lIHJ1bm5pbmchJyk7Cn0sIDMwMDApOwoKJC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljayAoKSB7CiAgICBjb25zb2xlLmxvZygnSVwnbSBjbGlja2VkJyk7Cn0pOw%3D%3D!!!PGJ1dHRvbj5DbGljayBNZTwvYnV0dG9uPg%3D%3D"></iframe>
+		</section>
+
+		<section class="slide loupe">
+			<h3>concurrency</h3>
+			<iframe src="http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCdmaXJzdCcpOwp9LCAxMDAwKTsKCnNldFRpbWVvdXQoZnVuY3Rpb24gY2FsbGJhY2soKSB7CiAgICBjb25zb2xlLmxvZygnc2Vjb25kJyk7Cn0sIDEwMDApOwoKc2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCd0aGlyZCcpOwp9LCAxMDAwKTsKCnNldFRpbWVvdXQoZnVuY3Rpb24gY2FsbGJhY2soKSB7CiAgICBjb25zb2xlLmxvZygnZm91cnRoJyk7Cn0sIDEwMDApOw%3D%3D!!!PGJ1dHRvbj5DbGljayBNZTwvYnV0dG9uPg%3D%3D"></iframe>
+		</section>
+
+		<section class="slide">
+			<pre>
+				<code class="language-javascript">
+function writeChapters(err, chapters) {
+	chapters.forEach(function(c) {
+		console.log(c);
+	});
+}
+
+function readSync() {
+	var chapter1 = getSync('//example.com/chapters/1');
+	var chapter2 = getSync('//example.com/chapters/2');
+	var chapter3 = getSync('//example.com/chapters/3');
+	return [chapter1, chapter2, chapter3];
+}
+
+writeChapters(readSync());
+				</code>
+			</pre>
+		</section>
+		<section class="slide">
+			<pre>
+				<code class="language-javascript">
+function readAsync(callback) {
+	var chapter1, chapter2, chapter3;
+	getAsync('//example.com/chapters/1', function (err, c1) {
+		if (err) { callback(err); }
+		chapter1 = c1;
+		getAsync('//example.com/chapters/2', function (err, c2) {
+			if (err) { callback(err); }
+			chapter2 = c2;
+			getAsync('//example.com/chapters/3', function (err, c3) {
+				if (err) { callback(err); }
+				chapter3 = c3;
+				callback(null, [chapter1, chapter2, chapter3]);
+			})
+		});
+	});
+}
+
+readAsync(writeChapters);
+				</code>
+			</pre>
+			<ul class="slide">
+				<li><span class="entypo-cancel"></span>Conflate input and output</li>
+				<li><span class="entypo-cancel"></span>Rely on convention</li>
+				<li><span class="entypo-cancel"></span>Cannot run processes in parallel</li>
+			</ul>
 		</section>
 
 		<section class="slide">
