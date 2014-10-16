@@ -236,10 +236,90 @@ async.parallel(getChapters, writeChapters);
 				<li><span class="entypo-cancel"></span>Handle error multiple times</li>
 			</ul>
 		</section>
+
 		<section class="slide">
 			<h1>Promises</h1>
 		</section>
+		<section class="slide">
+			<h3>What it looks like</h3>
+			<pre>
+				<code class="language-javascript">
+promisifiedFn().then(onFulfilled, onRejected);
+				</code>
+			</pre>
+			<pre class="slide">
+				<code class="language-javascript">
+getChapter('http://example.com/chapters/1').then(function (chapter) {
+	// do something with it
+	console.log(chapter);
+}, function (err) {
+	// handle error
+});
+				</code>
+			</pre>
+		</section>
+		<section class="slide">
+			<h3>Promise-ifying node-style callbacks</h3>
+			<pre>
+				<code class="language-javascript">
+function getChapter(url) {
+	var promise = new Promise(function (resolve, reject) {
+		xhrRequest(url, function (err, res) {
+			if (err) { reject(err);}
+			resolve(res);
+		});
+	});
+	return promise;
+}
+				</code>
+			</pre>
+			<div class="slide">
+				A promise can be:
+				<ul>
+					<li><strong>resolved/fulfilled</strong> The action relating to the promise succeeded.</li>
+					<li><strong>rejected</strong> The action relating to the promise failed.</li>
+					<li><strong>pending</strong> Hasn't fulfilled or rejected yet.</li>
+				</ul>
+			</div>
+		</section>
 
+		<section class="slide">
+			<h3>chainable</h3>
+			<pre>
+				<code class="language-javascript">
+var chapter1, chapter2, chapter3;
+getChapter('http://example.com/chapters/1').then(function (res) {
+	chapter1 = res;
+	return getChapter('http://example.com/chapters/2');
+}).then(function (res) {
+	chapter2 = res;
+	return getChapter('http://example.com/chapters/3');
+}).then(function (res) {
+	chapter3 = res;
+}).then(null, function (err) {
+	console.log('Error downloading chapters');
+});
+				</code>
+			</pre>
+		</section>
+		<section class="slide">
+			<h3>scale with <code>reduce</code></h3>
+			<pre>
+				<code class="language-javascript">
+var chapters = [
+'http://example.com/chapters/1',
+'http://example.com/chapters/2',
+'http://example.com/chapters/3'
+];
+
+chapters.reduce(function (sequence, url) {
+return sequence.then(function () {
+	return getChapter(url);
+});
+}, Promise.resolve());
+				</code>
+			</pre>
+		</section>
 		<!-- End slides. -->
 
 		<!-- Begin extension snippets. Add or remove as needed. -->
