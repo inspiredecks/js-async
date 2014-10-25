@@ -52,6 +52,10 @@
 			</ul>
 		</section>
 
+		<section class="slide">
+			<img src="assets/loading.gif"/>
+		</section>
+
 		<section class="slide single-threaded">
 			<div class="image-background">
 				<img src="assets/bridge.jpg"/>
@@ -80,18 +84,15 @@
 			<iframe src="http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCdEb25lIHJ1bm5pbmchJyk7Cn0sIDMwMDApOw%3D%3D!!!"></iframe>
 		</section>
 
-		<section class="slide">
-			<h1>Event Loop</h1>
+		<section class="slide loupe">
+			<h3>concurrency</h3>
+			<iframe src="http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCdmaXJzdCcpOwp9LCAxMDAwKTsKCnNldFRpbWVvdXQoZnVuY3Rpb24gY2FsbGJhY2soKSB7CiAgICBjb25zb2xlLmxvZygnc2Vjb25kJyk7Cn0sIDEwMDApOwoKc2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCd0aGlyZCcpOwp9LCAxMDAwKTsKCnNldFRpbWVvdXQoZnVuY3Rpb24gY2FsbGJhY2soKSB7CiAgICBjb25zb2xlLmxvZygnZm91cnRoJyk7Cn0sIDEwMDApOw%3D%3D!!!PGJ1dHRvbj5DbGljayBNZTwvYnV0dG9uPg%3D%3D"></iframe>
 		</section>
 
 		<section class="slide">
-			<h2>Callback</h2>
+			<h3>Callback</h3>
 			<pre>
-				<code class="language-javascript slide">
-function foo() {
-	console.log('foo');
-}
-
+				<code class="language-javascript">
 function bar(callback) {
 	console.log('bar');
 	callback();
@@ -102,7 +103,9 @@ function baz(callback1, callback2) {
 	callback1(callback2);
 }
 
-baz(bar, foo);
+baz(bar, function foo() {
+	console.log('foo');
+});
 				</code>
 				<code class="language-javascript slide">
 // baz
@@ -115,11 +118,6 @@ baz(bar, foo);
 		<section class="slide loupe">
 			<h3>event listener</h3>
 			<iframe src="http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCdEb25lIHJ1bm5pbmchJyk7Cn0sIDMwMDApOwoKJC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljayAoKSB7CiAgICBjb25zb2xlLmxvZygnSVwnbSBjbGlja2VkJyk7Cn0pOw%3D%3D!!!PGJ1dHRvbj5DbGljayBNZTwvYnV0dG9uPg%3D%3D"></iframe>
-		</section>
-
-		<section class="slide loupe">
-			<h3>concurrency</h3>
-			<iframe src="http://latentflip.com/loupe/?code=c2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCdmaXJzdCcpOwp9LCAxMDAwKTsKCnNldFRpbWVvdXQoZnVuY3Rpb24gY2FsbGJhY2soKSB7CiAgICBjb25zb2xlLmxvZygnc2Vjb25kJyk7Cn0sIDEwMDApOwoKc2V0VGltZW91dChmdW5jdGlvbiBjYWxsYmFjaygpIHsKICAgIGNvbnNvbGUubG9nKCd0aGlyZCcpOwp9LCAxMDAwKTsKCnNldFRpbWVvdXQoZnVuY3Rpb24gY2FsbGJhY2soKSB7CiAgICBjb25zb2xlLmxvZygnZm91cnRoJyk7Cn0sIDEwMDApOw%3D%3D!!!PGJ1dHRvbj5DbGljayBNZTwvYnV0dG9uPg%3D%3D"></iframe>
 		</section>
 
 		<section class="slide">
@@ -313,9 +311,9 @@ var chapters = [
 ];
 
 chapters.reduce(function (sequence, url) {
-return sequence.then(function () {
-	return getChapter(url);
-});
+	return sequence.then(function () {
+		return getChapter(url);
+	});
 }, Promise.resolve());
 				</code>
 			</pre>
@@ -418,9 +416,6 @@ chapters.map(getChapter).redunce(function(sequence, chapterPromise) {
 <!-- Required JS files. -->
 <script src="lib/jquery-2.1.1.min.js"></script>
 <script src="lib/deckjs/core/deck.core.js"></script>
-<script src="lib/prism.js"></script>
-
-<script async src="//codepen.io/assets/embed/ei.js"></script>
 
 <!-- Extension JS files. Add or remove as needed. -->
 <script src="lib/deckjs/extensions/menu/deck.menu.js"></script>
@@ -434,5 +429,9 @@ chapters.map(getChapter).redunce(function(sequence, chapterPromise) {
 		$.deck('.slide');
 	});
 </script>
+
+<script src="lib/prism.js"></script>
+<script async src="//codepen.io/assets/embed/ei.js"></script>
+
 </body>
 </html>
